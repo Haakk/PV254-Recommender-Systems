@@ -29,3 +29,9 @@ Taktiež súbor ``baseline.py`` obsahuje funkciu, ktorá spočíta RMSE.
 Baseline má na testovacej sade RMSE 0.9790.
 Pomocou vylepšenia baselinu by sa vám mohlo podariť dosiahnuť RMSE okolo 0.9.
 Vyskúšajte dosiahnuť RMSE 0.88 alebo lepšie.
+
+Pokúste sa nejakým spôsobom vizualizovať váš model. 
+Napríklad, pri použití matrix factorization modelu, vybrané filmy sa dajú v 2D vizualizovať nasledovne.
+Súradnice filmu sú 2 faktory k nemu prislúchajúce z modelu. 
+
+![Vizualizácia modelu](factors.png)
