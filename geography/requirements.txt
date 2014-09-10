@@ -1,0 +1,3 @@
+argparse==1.2.1
+proso-geography-data==1.0.0
+proso-geography-model==1.1.2
