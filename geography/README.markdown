@@ -58,9 +58,10 @@ MODELS_TO_EVALUATE = {
 ```
 
 Your predictive model has to implement the
-`proso.geography.model.PredictiveModel` and you will probably use
-`proso.geography.environment.InMemoryBasicEnvironment` for storing the
-auxiliary stuff.
+`proso.models.prediction.SimplePredictiveModel` (or
+`proso.models.prediction.PredictiveModel` if you know the difference) and you
+will probably use `None` as an environment (or
+`proso.models.environment.InMemoryEnvironment` if you know what is it).
 
 After the above mentioned changes you can start evaluating, e.g.:
 ```bash
