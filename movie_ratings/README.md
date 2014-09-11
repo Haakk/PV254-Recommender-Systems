@@ -1,37 +1,40 @@
 
-# Projekt: Movie ratings
+# Project: Movie ratings
 
-V tomto projekte máte k dispozícii dáta o tom ako jednotliví ľudia hodnotia filmy.
-Vašou úlohou je vytvoriť model, ktorý bude predpovedať hodnotenia filmov.
-
-
-## Súbory
-
-Súbory typu ``csv`` reprezentujú tabuľky dát. Každý riadok v súbore predstavuje riadok v tabuľke.
-Jednotlivé hodnoty v riadkoch sú oddelené čiarkami. Prvý riadok typicky obsahuje názvy stĺpcov.
-
-- ``baseline.py`` - obsahuje implementáciu jednoduchého baseline modelu, ktorý pre každý film predikuje jeho priemerné hodnotenie.
-Baseline spustíte pomocou príkazu ``python baseline.py``. Taktiež tu nájdetie funkcie na načítanie dát a vypočítanie hodnotiacej metriky.
-- ``ratings-train.csv`` obsahuje dáta určené na trénovanie modelu. Každý riadok predstavuje trojicu *film*, *užívateľ*, *hodnotenie*.
-- ``ratings-test.csv`` obsahuje dáta určené na testovanie modelu.
-- ``movies.csv`` - obsahuje mapovanie číselných id filmov na ich názvy a žánre. Tento súbor nie je potrebný k trénovaniu modelu, ale môže poslúžiť pri vizualizáciach.
-
-## Metrika úspešnosti
-
-Na vyhodnotenie úspešnosti modelu budeme používať metriku zvanú **Root Mean Squared Error** (RMSE).
-Viac informácií nájdete na [wikipédií](http://en.wikipedia.org/wiki/Root-mean-square_deviation). 
-
-Taktiež súbor ``baseline.py`` obsahuje funkciu, ktorá spočíta RMSE.
+You are provided with data about how individual people rate movies.
+Your goal is to construct a model that predicts these ratings.
 
 
-## Ciele
+## Files
 
-Baseline má na testovacej sade RMSE 0.9790.
-Pomocou vylepšenia baselinu by sa vám mohlo podariť dosiahnuť RMSE okolo 0.9.
-Vyskúšajte dosiahnuť RMSE 0.88 alebo lepšie.
+The ``.csv`` files are used to represent tabular data.
+Each line in the file represents a row in the table.
+Commas are used to separate individual columns.
+The first row is typically the header.
 
-Pokúste sa nejakým spôsobom vizualizovať váš model. 
-Napríklad, pri použití matrix factorization modelu, vybrané filmy sa dajú v 2D vizualizovať nasledovne.
-Súradnice filmu sú 2 faktory k nemu prislúchajúce z modelu. 
+- ``baseline.py`` contains the implementation of a simple baseline model. This model predicts the average rating for each movie.
+You can run the program by ``python baseline.py``. 
+It also contains some useful functions (loading the data, computing RMSE)
+- ``ratings-train.csv`` contains the data for training the model. Each row is a 3-tuple *movie*, *user*, *rating*.
+- ``ratings-test.csv`` contains the data for testing how well the model generalizes.
+- ``movies.csv`` contains the mapping of movie ids (that is used to represent movies in the ratings-train/test data sets) to their titles and genres.
+This file is not required for the training/testing of the model. It will be useful for doing visualizations (like the one at the bottom).
 
-![Vizualizácia modelu](factors.png)
+## Metric of success
+
+To infer how well the model generalizes we will use a metric called **Root Mean Squared Error** (RMSE) on the test set.
+More information about RMSE can be found on [Wikipedia](http://en.wikipedia.org/wiki/Root-mean-square_deviation). 
+``baseline.py`` contains a function that computes RMSE.
+
+
+## Goals of the project
+
+Baseline model achieves RMSE 0.9790 on the test set.
+If you improve the baseline then you should get RMSE around 0.9.
+Try to develop a model that achieves RMSE 0.88 or better on the test set.
+
+Try to visualize your model somehow.
+For example, if you use a matrix factorization approach with 2 factors then you can visualize selected movies in 2D.
+The coordinates of an individual movie are the values of the factors that correspond to that movie.
+
+![Model visualization](factors.png)
