@@ -16,6 +16,7 @@ import proso.geography.optimize as optimize
 MODELS_TO_EVALUATE = {
     'rolling_success': (ownmodel.RollingSuccessModel(), environment.InMemoryBasicEnvironment()),
     'global_succcess': (ownmodel.AverageModel(), environment.InMemoryBasicEnvironment()),
+    'global_succcess_simple': (ownmodel.AverageModelWithoutEnvironment(), None),
     'default': (model.DefaultModel(), environment.InMemoryEnvironment())
 }
 

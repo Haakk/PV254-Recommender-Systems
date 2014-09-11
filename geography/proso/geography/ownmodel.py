@@ -22,6 +22,27 @@ class RollingSuccessModel(PredictiveModel):
         pass
 
 
+class AverageModelWithoutEnvironment(PredictiveModel):
+
+    """
+    Predicts the probability of the correct answer equal to the global success rate.
+    It doesn't use environment.
+    """
+
+    _correct = 0
+    _all = 0
+
+    def prepare(self, user_id, place_asked_id, options, question_type, inserted, environment):
+        return self._correct/ float(max(self._all, 1))
+
+    def predict(self, user_id, place_asked_id, options, question_type, inserted, data):
+        return data
+
+    def update(self, answer, environment, data, prediction):
+        self._correct += (answer['place_asked'] == answer['place_answered'])
+        self._all += 1
+
+
 class AverageModel(PredictiveModel):
 
     """
