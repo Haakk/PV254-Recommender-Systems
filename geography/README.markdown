@@ -104,3 +104,27 @@ python evaluate.py -l answers_train.csv \
     --param_steps 0.1 0.2 \
     -s 0.1 -p
 ```
+
+## Modelling
+
+### Used Metrics
+
+The main metric you should consider is [Root Mean Square Error
+(RMSE)](http://en.wikipedia.org/wiki/Root-mean-square_deviation). The presented
+gives you also information about other metrics, but this information is here
+only to help you understand your model, other metrics are:
+ * [Log-Likelihood (LL)](http://en.wikipedia.org/wiki/Likelihood_function#Log-likelihood),
+ * [Area Under Curve (AUC)](http://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_curve),
+ * [Brier Score](http://en.wikipedia.org/wiki/Brier_score#3-component_decomposition).
+
+Your model has to be better than the naive `global_succes` algorithm and should
+be also at least as good as the `default` one (rounded to the second decimal
+place).
+
+### Motivation
+
+Do not use only numbers provided by `evaluete.py`, be creative and try to use
+other techniques helping you understand what is going on. Here is an example of
+clustering of countries:
+
+![Clustering](resources/world.png)
