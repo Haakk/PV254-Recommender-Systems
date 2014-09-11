@@ -2,22 +2,19 @@ from argparse import ArgumentParser
 from os import path, makedirs
 import matplotlib.pyplot as plt
 import proso.geography.answers as answers
-import proso.geography.environment as environment
+import proso.models.environment as environment
 import proso.geography.evaluate as evaluate
-import proso.geography.model as model
+import proso.models.prediction as model
 import proso.geography.ownmodel as ownmodel
-import proso.geography.optimize as optimize
+import proso.models.optimize as optimize
 
 
 # Place here models you want to evaluate. Keys in the following dictionary
 # represent names and values are pairs: the instance of the predictive model
-# and the instance of the used environment (typically
-# proso.geography.environment.InMemoryBasicEnvironment).
+# and the instance of the used environment (or None).
 MODELS_TO_EVALUATE = {
-    'rolling_success': (ownmodel.RollingSuccessModel(), environment.InMemoryBasicEnvironment()),
-    'global_succcess': (ownmodel.AverageModel(), environment.InMemoryBasicEnvironment()),
-    'global_succcess_simple': (ownmodel.AverageModelWithoutEnvironment(), None),
-    'default': (model.DefaultModel(), environment.InMemoryEnvironment())
+    'global_succcess': (ownmodel.AverageModel(), None),
+    'default': (model.PriorCurrentPredictiveModel(), environment.InMemoryEnvironment())
 }
 
 # Place here models you want to optimize. Keys in the following dictionary
@@ -27,7 +24,7 @@ MODELS_TO_EVALUATE = {
 # All parameters in the constructors of predictive model and the environment
 # has to have default values.
 MODELS_TO_OPTIMIZE = {
-    'default': (model.DefaultModel, environment.InMemoryEnvironment)
+    'default': (model.PriorCurrentPredictiveModel, environment.InMemoryEnvironment)
 }
 
 DESTINATION = 'dest'
@@ -110,13 +107,12 @@ def savefig(args, fig, name):
 
 def print_evaluation(args, name, m, e, data):
     print name
-    stream = model.AnswerStream(m, e)
-    evaluator = evaluate.Evaluator(stream, data)
+    evaluator = evaluate.Evaluator(data, m, e)
     evaluator.prepare(stdout=args.progress)
     brier_rel, brier_res, brier_unc = evaluator.brier()
     result = {
         'rmse': evaluator.rmse(),
-        'll': evaluator.rmse(),
+        'll': evaluator.logloss(),
         'auc': evaluator.auc(),
         'brier_reliability': brier_rel,
         'brier_resolution': brier_res,
@@ -170,8 +166,7 @@ def action_optimize(args, data):
     model_func, env_func = MODELS_TO_OPTIMIZE[args.optimize]
     def optimize_model(opt_args):
         m = model_func(**dict(zip(args.param_names, opt_args))) if args.param_names is not None else model_func(*opt_args)
-        stream = model.AnswerStream(m, env_func())
-        evaluator = evaluate.Evaluator(stream, data)
+        evaluator = evaluate.Evaluator(data, m, env_func())
         evaluator.prepare(stdout=args.progress)
         rmse = evaluator.rmse()
         if args.progress:

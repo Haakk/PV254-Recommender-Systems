@@ -52,9 +52,8 @@ model:
 
 ```python
 MODELS_TO_EVALUATE = {
-    'rolling_success': (ownmodel.RollingSuccessModel(), environment.InMemoryBasicEnvironment()),
-    'global_succcess': (ownmodel.AverageModel(), environment.InMemoryBasicEnvironment()),
-    'default': (model.DefaultModel(), environment.InMemoryEnvironment())
+    'global_succcess': (ownmodel.AverageModel(), None),
+    'default': (model.PriorCurrentPredictiveModel(), environment.InMemoryEnvironment())
 }
 ```
 
@@ -68,8 +67,8 @@ After the above mentioned changes you can start evaluating, e.g.:
 # evaluate all the given models with data from answers_train.csv and show progress bar
 python evaluate.py -l answers_train.csv -p
 
-# evaluate only the model called 'rolling_success'
-python evaluate.py -l answers_train.csv -m rolling_success -p
+# evaluate only the model called 'global_success'
+python evaluate.py -l answers_train.csv -m global_success -p
 
 # use only cca 10 % of data for evaluation
 python evaluate.py -l answers_train.csv -s 0.1
@@ -85,7 +84,7 @@ optimize parameters of your predictive model:
 
 ```python
 MODELS_TO_OPTIMIZE = {
-    'default': (model.DefaultModel, environment.InMemoryEnvironment)
+    'default': (model.PriorCurrentPredictiveModel, environment.InMemoryEnvironment)
 }
 ```
 
